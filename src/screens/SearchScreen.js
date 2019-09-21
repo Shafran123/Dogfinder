@@ -3,13 +3,15 @@ import { View, Text, StyleSheet } from 'react-native';
 import SerachBar from '../Components/SerachBar'; 
 import useResult from '../hooks/useResults';
 import ResultList from '../Components/ResultList';
+import _ from 'lodash';
+
 
 
 const SearchScreen = () => {
 
 
   const [term, setTerm] = useState('');
-  const [serachApi , results ,errorMessage] = useResult();
+  const [serachApi , results ,errorMessage , serachFunction ] = useResult();
 
 
   const getResult = () =>{
@@ -21,7 +23,10 @@ const SearchScreen = () => {
     <View>
       <SerachBar
         term={term}
-        onTermChange={(newTerm) => setTerm(newTerm)}
+        onTermChange={(newTerm) => 
+          {setTerm(newTerm);
+            serachFunction(term)
+          }}
         onTermSubmit={() => serachApi(term)}
       />
       {errorMessage ? <Text>{errorMessage}</Text> : null}
